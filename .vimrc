@@ -44,18 +44,26 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0)-5)<CR>
 hi CursorLine	cterm=NONE ctermbg=235
 hi CursorColumn  cterm=NONE ctermbg=235
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-:autocmd VimEnter * echo "Hello, Nick"
-:autocmd VimEnter * set cursorline
-:autocmd VimEnter * set cursorcolumn
 
-:autocmd WinLeave * set nocursorline
-:autocmd WinLeave * set nocursorcolumn
+:autocmd VimEnter * :color slate
 
-:autocmd BufEnter * set cursorline
-:autocmd BufEnter * set cursorcolumn
+augroup curs
+    :autocmd!
+    :autocmd VimEnter,WinEnter * set cursorline
+    :autocmd VimEnter,WinEnter * set cursorcolumn
+augroup END
 
-:autocmd InsertEnter * set nocursorline
-:autocmd InsertLeave * set cursorline
+augroup winCurs
+    :autocmd!
+    :autocmd WinLeave * set nocursorline
+    :autocmd WinLeave * set nocursorcolumn
+augroup END
+
+augroup inCurs
+    :autocmd!
+    :autocmd InsertEnter * set nocursorline
+    :autocmd InsertLeave * set cursorline
+augroup END
 
 set undofile
 set undodir=~/.vim/tmp/undo/
@@ -81,11 +89,17 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set autoindent
+set hlsearch
 
 "get rid of F1 help
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-"Documentaiton of the day
-nnoremap <leader>h <C-w>v:e ~/.vim/bundle/vim-snippets/snippets/python.snippets<cr>
+"Change mapping to scroll up and down with shift j, shift k
+nnoremap X J
+nnoremap J  <c-e>
+nnoremap K <c-y>
+"make switching buffers easier
+nnoremap m <c-w>w
+
