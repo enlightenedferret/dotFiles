@@ -1,25 +1,16 @@
-"Vundle stuff
 set nocompatible
 filetype off
 
-"set the runtime path to include Vundle and initialize
+" Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-
 call vundle#begin()
-"let Vundle manage itself
-Plugin 'gmarik/Vundle.vim'
-Plugin 'https://github.com/scrooloose/syntastic.git'
 
-call vundle#end()
-filetype plugin on
-"""""""Syntastic stuff""""
-"show syntasticerror box
-nnoremap <leader>e :lw<CR> 
-"hide syntastic error box
-nnoremap <leader>E :lcl<CR>
-let g:syntastic_auto_jump=0
-let g:syntastic_check_on_open=1
-"""""""""""""""""""""""""""
+" Add NERDTree plugin to Vundle
+Plugin 'preservim/nerdtree'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 syntax on
 set history=1000
@@ -41,11 +32,24 @@ nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0)+5)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0)-5)<CR>
 
 
+"highlight columns beyond 80
+execute "set colorcolumn=" . join(range(81,335), ',')
+hi ColorColumn ctermbg=235 guibg=#2c2d27
+
 hi CursorLine	cterm=NONE ctermbg=235
 hi CursorColumn  cterm=NONE ctermbg=235
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 :autocmd VimEnter * :color slate
+"
+" Toggle NERDTree sidebar with Ctrl-n
+map <C-n> :NERDTreeToggle<CR>
+
+let NERDTreeMapMenu='u'
+
+" Set NERDTree to automatically open on startup
+autocmd VimEnter * if &filetype ==# 'python' | NERDTree | endif
+
 
 augroup curs
     :autocmd!
@@ -102,4 +106,5 @@ nnoremap J  <c-e>
 nnoremap K <c-y>
 "make switching buffers easier
 nnoremap m <c-w>w
+
 
